@@ -1,0 +1,729 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400;1,700&family=Public+Sans:wght@400;700&display=swap");
+:root {
+  --bg-main: linear-gradient(to right, #365795, #07398e);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Public Sans", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #21D4FD;
+  background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.show {
+  display: flex !important;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  background-color: rgba(255, 0, 0, 0.4);
+}
+
+::-webkit-scrollbar-thumb {
+  width: 5px;
+  background-color: rgba(255, 0, 0, 0.6);
+}
+
+.login-container {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  min-width: 300px;
+  border: 2px solid black;
+  border-radius: 8px;
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.3);
+}
+.login-container h1,
+.login-container p {
+  color: rgba(255, 255, 255, 0.8);
+}
+.login-container p {
+  font-size: 14px;
+}
+.login-container p a {
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.login-container form > div:not(:last-child) {
+  position: relative;
+}
+.login-container form > div:not(:last-child) > input:not([type=submit]) {
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  padding: 0 10px 0 40px;
+  width: 270px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1019607843);
+  height: 40px;
+  color: #fff;
+}
+.login-container form > div:not(:last-child) > input:not([type=submit])::placeholder {
+  color: rgba(255, 255, 255, 0.7019607843);
+}
+.login-container form > div:not(:last-child) > input:not([type=submit]):-webkit-autofill {
+  -webkit-text-fill-color: unset;
+}
+.login-container form > div:not(:last-child) > input:not([type=submit]):-webkit-autofill + i {
+  color: black;
+}
+.login-container form > div:not(:last-child) i {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translate(-50%, -50%);
+  color: rgba(255, 255, 255, 0.7);
+}
+.login-container form > div:last-child {
+  display: flex;
+  justify-content: space-between;
+}
+.login-container form > div:last-child > label,
+.login-container form > div:last-child a {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+}
+.login-container form > div:last-child label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.login-container form > div:last-child a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.6);
+}
+.login-container form > input {
+  height: 30px;
+  border-radius: 10px;
+  border: 0;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: 0.3s;
+}
+.login-container form > input:active {
+  transform: translateY(2px);
+}
+
+.register-container {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  min-width: 300px;
+  border: 2px solid black;
+  border-radius: 8px;
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.3);
+  padding: 50px 20px;
+}
+.register-container h1,
+.register-container p {
+  color: rgba(255, 255, 255, 0.8);
+}
+.register-container p {
+  font-size: 14px;
+}
+.register-container p a {
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+.register-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 300px;
+}
+.register-container form > div {
+  padding: 5px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.register-container form > div input, .register-container form > div select {
+  width: 100%;
+  height: 40px;
+  border-radius: 6px;
+  outline: none;
+  padding-left: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  background-color: rgba(255, 255, 255, 0.7);
+}
+.register-container form > div p {
+  color: black;
+  font-weight: bold;
+  position: relative;
+}
+.register-container form > div p span {
+  position: absolute;
+  right: 10px;
+  display: inline-block;
+  font-size: 12px;
+  color: red;
+}
+.register-container form > input {
+  width: 200px;
+  align-self: center;
+  height: 30px;
+  border: 0;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.7);
+  font-weight: bold;
+  border-radius: 4px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.register-container form > input:active {
+  transform: translateY(2px);
+}
+
+.main-container {
+  display: flex;
+  width: 1000px;
+  height: 800px;
+  background: var(--bg-main);
+  border-radius: 10px;
+  box-shadow: 0 5px 50px rgba(0, 0, 0, 0.5);
+}
+.main-container > .main-one {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 10px 10px 10px;
+  gap: 10px;
+}
+.main-container > .main-one h1 {
+  align-self: center;
+  display: flex;
+  align-items: center;
+}
+.main-container > .main-one > ul {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 10px;
+  height: 50px;
+  background: rgba(215, 198, 198, 0.5);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  width: 260px;
+}
+.main-container > .main-one > ul li {
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.main-container > .main-one > ul li i {
+  color: #20232b;
+}
+.main-container > .main-one > ul li:hover, .main-container > .main-one > ul li.active {
+  border: 2px solid #617bac;
+  background: rgb(215, 198, 198);
+  border-radius: 50%;
+}
+.main-container > .main-one > ul li.active {
+  transform: translateY(-20px);
+}
+.main-container > .main-one > ul li:first-child {
+  position: relative;
+}
+.main-container > .main-one > ul li:first-child:after {
+  content: "99";
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  right: -5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  background-color: rgba(255, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 50%;
+}
+.main-container > .main-one > div {
+  background-color: rgba(215, 198, 198, 0.5);
+  width: 260px;
+  height: calc(100% - 125px);
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.main-container > .main-one > div.notification-container, .main-container > .main-one > div.message-container {
+  display: flex;
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 5px;
+  overflow-y: auto;
+}
+.main-container > .main-one > div.notification-container > div, .main-container > .main-one > div.message-container > div {
+  width: 100%;
+  max-height: 50px;
+  min-height: 50px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  cursor: pointer;
+}
+.main-container > .main-one > div.notification-container > div:hover, .main-container > .main-one > div.message-container > div:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+}
+.main-container > .main-one > div.notification-container > div.active, .main-container > .main-one > div.message-container > div.active {
+  background: rgba(0, 0, 0, 0.3);
+}
+.main-container > .main-one > div.notification-container > div > div:first-child, .main-container > .main-one > div.message-container > div > div:first-child {
+  background-color: green;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  filter: grayscale(60%);
+}
+.main-container > .main-one > div.notification-container > div > div:nth-child(2), .main-container > .main-one > div.message-container > div > div:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: calc(100% - 40px);
+}
+.main-container > .main-one > div.notification-container > div > div:nth-child(2) > div:first-child, .main-container > .main-one > div.message-container > div > div:nth-child(2) > div:first-child {
+  font-size: 12px;
+  font-weight: bold;
+  text-align: end;
+  font-family: monospace;
+}
+.main-container > .main-one > div.notification-container > div > div:nth-child(2) > p:nth-child(2), .main-container > .main-one > div.message-container > div > div:nth-child(2) > p:nth-child(2) {
+  font-size: 14px;
+  width: calc(100% - 5px);
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.main-container > .main-one > div.contact-container {
+  display: flex;
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+}
+.main-container > .main-one > div.contact-container > div:first-child {
+  width: 100%;
+  height: 40px;
+  position: relative;
+}
+.main-container > .main-one > div.contact-container > div:first-child > input[type=text] {
+  height: 40px;
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 40px;
+  outline: none;
+  border: 0;
+  background: rgba(255, 255, 255, 0.6);
+}
+.main-container > .main-one > div.contact-container > div:first-child i {
+  cursor: pointer;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.4);
+  right: 0;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.5);
+}
+.main-container > .main-one > div.contact-container > div:first-child i:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.main-container > .main-one > div.contact-container .search-list,
+.main-container > .main-one > div.contact-container .contact-list {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  overflow-y: auto;
+}
+.main-container > .main-one > div.contact-container .search-list li,
+.main-container > .main-one > div.contact-container .contact-list li {
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 5px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.main-container > .main-one > div.contact-container .search-list li > div:first-child,
+.main-container > .main-one > div.contact-container .contact-list li > div:first-child {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background-color: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  filter: grayscale(50%);
+}
+.main-container > .main-one > div.contact-container .search-list li > div:nth-child(2),
+.main-container > .main-one > div.contact-container .contact-list li > div:nth-child(2) {
+  width: calc(100% - 60px);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.main-container > .main-one > div.contact-container .search-list li > div:nth-child(2) p,
+.main-container > .main-one > div.contact-container .contact-list li > div:nth-child(2) p {
+  text-align: center;
+  font-weight: bold;
+  width: calc(100% - 5px);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.main-container > .main-one > div.contact-container .search-list li > div:nth-child(2) div,
+.main-container > .main-one > div.contact-container .contact-list li > div:nth-child(2) div {
+  display: flex;
+  justify-content: space-evenly;
+}
+.main-container > .main-one > div.contact-container .search-list li > div:nth-child(2) div a,
+.main-container > .main-one > div.contact-container .contact-list li > div:nth-child(2) div a {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+}
+.main-container > .main-one > div.contact-container .search-list li > div:nth-child(2) div a:hover,
+.main-container > .main-one > div.contact-container .contact-list li > div:nth-child(2) div a:hover {
+  font-weight: bold;
+  scale: 1.1;
+}
+.main-container > .main-one > div.contact-container .saved-contact {
+  display: none;
+  padding: 5px;
+  flex-direction: column;
+  gap: 10px;
+}
+.main-container > .main-one > div.contact-container .saved-contact > details summary {
+  font-size: 14px;
+  font-weight: bold;
+}
+.main-container > .main-one > div.contact-container .saved-contact > details > ul.show {
+  display: flex !important;
+}
+.main-container > .main-one > div.profile-container {
+  padding: 10px;
+  display: none;
+  flex-direction: column;
+}
+.main-container > .main-one > div.profile-container.show {
+  display: flex;
+}
+.main-container > .main-one > div.profile-container form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.main-container > .main-one > div.profile-container form > div {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.main-container > .main-one > div.profile-container form > div p {
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.5);
+}
+.main-container > .main-one > div.profile-container form > div input,
+.main-container > .main-one > div.profile-container form > div select {
+  height: 30px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  outline: none;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.main-container > .main-one > div.profile-container form > div input.changeable,
+.main-container > .main-one > div.profile-container form > div select.changeable {
+  border: 2px solid rgba(0, 255, 0, 0.5);
+}
+.main-container > .main-one > div.profile-container form input[type=submit] {
+  height: 30px;
+  width: 100px;
+  outline: none;
+  border: 0;
+  border-radius: 6px;
+  transition: 0.3s;
+  cursor: pointer;
+  font-weight: bold;
+}
+.main-container > .main-one > div.profile-container form input[type=submit]:active {
+  transform: translateY(2px);
+}
+.main-container > .main-one > div.profile-container a {
+  margin-top: 20px;
+  align-self: center;
+  font-weight: bold;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  color: rgba(255, 255, 255, 0.8);
+}
+.main-container > .main-one > div.profile-container a:nth-child(2) {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.main-container > .main-one > div.profile-container a:last-child {
+  background-color: rgba(228, 140, 17, 0.5);
+  width: 100px;
+  text-align: center;
+}
+.main-container > .main-one > div.profile-container a:hover {
+  color: #fff;
+}
+.main-container > .main-two {
+  width: 700px;
+  padding: 10px;
+}
+.main-container > .main-two.hidden {
+  display: none;
+}
+.main-container > .main-two .main-header {
+  border-bottom: 1px solid black;
+  height: 100px;
+  background: rgba(215, 198, 198, 0.5);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-radius: 4px 4px 4px 0;
+}
+.main-container > .main-two .main-header > .dropdown {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.main-container > .main-two .main-header > .dropdown .dropdown-input {
+  cursor: pointer;
+}
+.main-container > .main-two .main-header > .dropdown .dropdown-list {
+  position: absolute;
+  top: calc(100% + 5px);
+  background-image: linear-gradient(-20deg, #00cdac 0%, #8ddad5 100%);
+  left: -75px;
+  width: 120px;
+  padding: 10px;
+  display: none;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 4px;
+}
+.main-container > .main-two .main-header > .dropdown .dropdown-list.show {
+  display: flex;
+}
+.main-container > .main-two .main-header > .dropdown .dropdown-list li {
+  text-align: center;
+  font-weight: bold;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+}
+.main-container > .main-two .main-header > .dropdown .dropdown-list li i {
+  position: absolute;
+  right: 0;
+  border: 1px solid black;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+.main-container > .main-two .chat-box {
+  height: calc(100% - 100px);
+}
+.main-container > .main-two .chat-box > .chatzone {
+  height: calc(100% - 100px);
+  overflow-y: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  background: rgba(215, 198, 198, 0.5);
+  gap: 3px;
+}
+.main-container > .main-two .chat-box > .chatzone > div {
+  width: 100%;
+  height: 30px;
+  background-color: transparent;
+  margin-top: auto !important;
+}
+.main-container > .main-two .chat-box > .chatzone > li {
+  word-break: break-word;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+.main-container > .main-two .chat-box > .chatzone > li.main > span {
+  display: none;
+}
+.main-container > .main-two .chat-box > .chatzone > li.main > div {
+  justify-content: flex-end;
+}
+.main-container > .main-two .chat-box > .chatzone > li.main > div > span {
+  display: none;
+}
+.main-container > .main-two .chat-box > .chatzone > li > span {
+  display: block;
+  text-align: start;
+  width: 100%;
+  height: 20px;
+  font-size: 14px;
+  padding-left: 40px;
+}
+.main-container > .main-two .chat-box > .chatzone > li > div {
+  width: 100%;
+  display: flex;
+  gap: 5px;
+  align-items: flex-end;
+}
+.main-container > .main-two .chat-box > .chatzone > li > div > span {
+  width: 35px;
+  height: 35px;
+  background-color: rgb(185, 185, 170);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+.main-container > .main-two .chat-box > .chatzone > li > div > p {
+  min-height: 35px;
+  max-width: 60%;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: #d9a288;
+}
+.main-container > .main-two .chat-box .chat-keys {
+  height: 100px;
+  border-bottom-right-radius: 6px;
+  background: rgba(215, 198, 198, 0.5);
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.main-container > .main-two .chat-box .chat-keys > div:first-child {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  width: max(30px, 5%);
+  background: url("./../images/happy.svg") no-repeat;
+  background-size: 100% 100%;
+  cursor: pointer;
+  border-radius: 60%;
+  position: relative;
+}
+.main-container > .main-two .chat-box .chat-keys > div:first-child:hover {
+  background-color: yellow;
+}
+.main-container > .main-two .chat-box .chat-keys > div:first-child > div {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 10px);
+}
+.main-container > .main-two .chat-box .chat-keys > textarea {
+  height: 90px;
+  width: 85%;
+  border: 1px black solid;
+  outline: none;
+  resize: none;
+  padding: 5px;
+  font-size: 16px;
+}
+.main-container > .main-two .chat-box .chat-keys > input[type=button] {
+  box-shadow: 1px 2px rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+  transition: 0.3s linear;
+  cursor: pointer;
+  height: 30px;
+  width: 150px;
+  border-radius: 4px;
+  border: 0;
+  outline: none;
+  height: 100%;
+  width: 10%;
+  border: 1px black solid;
+}
+.main-container > .main-two .chat-box .chat-keys > input[type=button]:hover {
+  background: #cebaba;
+}
+.main-container > .main-two .chat-box .chat-keys > input[type=button]:active {
+  transform: translateY(2px);
+}
+
+.modal-container {
+  min-width: 100px;
+  min-height: 100px;
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+}
+.modal-container.show {
+  display: flex !important;
+}
+.modal-container h1 {
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.7);
+}
+.modal-container input {
+  width: 100px;
+  height: 30px;
+  outline: none;
+  border: 0;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/*# sourceMappingURL=app.css.map */

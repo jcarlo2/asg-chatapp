@@ -1,0 +1,67 @@
+.login-container {
+  @include smallContainer;
+  @include customH1AndParagraph;
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    > div:not(:last-child) {
+      position: relative;
+      > input:not([type="submit"]) {
+        @include defaultInput;
+        padding: 0 10px 0 40px;
+        width: 270px;
+        border-radius: 8px;
+        background-color: #ffffff1a;
+        height: 40px;
+        color: #fff;
+        &::placeholder {
+          color: #ffffffb3;
+        }
+        &:-webkit-autofill{
+          -webkit-text-fill-color: unset;
+          & + i {
+            color: black;
+          }
+        }
+      }
+      i {
+        position: absolute;
+        top: 50%;
+        left: 20px;
+        transform: translate(-50%, -50%);
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+    > div:last-child {
+      display: flex;
+      justify-content: space-between;
+      > label,
+      a {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.6);
+      }
+      label {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      a {
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.6);
+      }
+    }
+    > input {
+      height: 30px;
+      border-radius: 10px;
+      border: 0;
+      font-weight: bold;
+      background: rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+      transition: 0.3s;
+      &:active {
+        transform: translateY(2px);
+      }
+    }
+  }
+}
