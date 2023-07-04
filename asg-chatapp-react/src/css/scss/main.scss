@@ -348,6 +348,10 @@
             justify-content: flex-start;
             align-items: center;
             position: relative;
+            cursor: pointer;
+            &:hover {
+              background-color: rgba(0,0,0,0.3);
+            }
             i {
               position: absolute;
               right: 0;

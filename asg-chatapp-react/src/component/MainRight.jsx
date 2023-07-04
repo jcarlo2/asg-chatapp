@@ -1,41 +1,33 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
-import { io } from "socket.io-client";
 import GlobalContext from "../context/GlobalContext";
+import useHelper from "../helper/useHelper";
 
 const MainRight = () => {
   const url = useContext(GlobalContext).url;
+  const socket = useContext(GlobalContext).socket;
   const friend = useContext(GlobalContext).friendProfile;
   const profile = useContext(GlobalContext).profile;
   const friendList = useContext(GlobalContext).friendList;
   const setFriendList = useContext(GlobalContext).setFriendList;
+  const setBlockedList = useContext(GlobalContext).setBlockedList;
+  const headerOptionRef = useContext(GlobalContext).headerOptionRef;
+  const contentList = useContext(GlobalContext).contentList;
+  const setContentList = useContext(GlobalContext).setContentList;
   const emoji = useRef();
   const messageBox = useRef();
   const messageList = useRef();
-  const [contentList, setContentList] = useState([]);
   const [username, setUsername] = useState("");
-  const socket = io.connect(url);
-  const [doScroll, setDoScroll] = useState(false)
+  const helper = useHelper();
 
   useEffect(() => {
-    socket.on("connect", () => {
-      console.log("CONNECTED");
-    });
-    return () => socket.removeAllListeners();
-  }, []);
-
-  useEffect(()=> {
-    messageList.current.scrollTop = messageList.current.scrollHeight
-  }, [contentList])
-
+    messageList.current.scrollTop = messageList.current.scrollHeight;
+  }, [contentList]);
 
   useEffect(() => {
     for (const friendship of friendList) {
       socket.on(friendship.conversationId, (message, room, date) => {
         if (room === friend.conversationId) {
-          console.log(room)
-          console.log(friend.conversationId)
-          console.log(room === friendship.conversationId)
           setContentList((prevState) => [...prevState, message]);
         }
         setFriendList((prevFriendList) =>
@@ -52,8 +44,11 @@ const MainRight = () => {
         );
       });
     }
-    console.log(friendList);
-    return () => socket.removeAllListeners();
+    return () => {
+      for (const friendship of friendList) {
+        socket.off(friendship.conversationId);
+      }
+    };
   }, [friendList, friend]);
 
   useEffect(() => {
@@ -80,7 +75,6 @@ const MainRight = () => {
         res.json().then(setContentList);
       }
     });
-    console.log(friend)
   }, [friend]);
 
   const handleEmojiContainer = () => {
@@ -95,9 +89,14 @@ const MainRight = () => {
 
   const sendMessage = () => {
     const message = messageBox.current.value;
-    if (message.trim() !== "" && friend.conversationId > 0)
-      socket.emit("send", friend.conversationId, message, profile.username);
-    messageBox.current.value = "";
+    if (message.trim() !== "" && friend.conversationId > 0) {
+      socket.emit("send", {
+        room: friend.conversationId,
+        message,
+        username: profile.username,
+      });
+      messageBox.current.value = "";
+    }
   };
 
   const handleHide = (message) => {
@@ -135,30 +134,62 @@ const MainRight = () => {
     // }
   };
 
+  const handleUnblockAndUnfriend = (id) => {
+    fetch(`${url}/api/v1/user/unblock-unfriend`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id }),
+    }).then((res) => {
+      if (res.ok) {
+        res.json().then((data) => {
+          helper.findBlockedFriends();
+          helper.findAllFriends();
+        });
+      }
+    });
+  };
+
+  const handleBlock = (id) => {
+    fetch(`${url}/api/v1/user/block`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id }),
+    }).then((res) => {
+      if (res.ok) {
+        res.json().then((data) => {
+          setBlockedList(data);
+          helper.findAllFriends();
+          if (id === friend.id) setContentList([]);
+        });
+      }
+    });
+  };
+
+  const handleHeaderOptionToggle = () => {
+    if (friend.conversationId < 0) return;
+    headerOptionRef.current.classList.toggle("show");
+  };
+
   return (
     <section className="main-two">
       <div className="main-header">
         <h1>{friend.fullName}</h1>
         <div className="dropdown">
-          <i className="bx bx-dots-vertical-rounded bx-md dropdown-input"></i>
-          <ul className="dropdown-list">
-            <li>
-              <i className="bx bx-user-plus bx-sm"></i>
-              Accept
-            </li>
-            <li>
-              <i className="bx bx-user-plus bx-sm"></i>
-              Add
-            </li>
-            <li>
-              <i className="bx bx-child bx-sm"></i>
-              Friend
-            </li>
-            <li>
+          <i
+            className="bx bx-dots-vertical-rounded bx-md dropdown-input"
+            onClick={handleHeaderOptionToggle}></i>
+          <ul ref={headerOptionRef} className="dropdown-list">
+            <li onClick={() => handleUnblockAndUnfriend(friend.id)}>
               <i className="bx bx-user-x bx-sm"></i>
               Unfriend
             </li>
-            <li>
+            <li onClick={() => handleBlock(friend.id)}>
               <i className="bx bx-block bx-sm"></i>
               Block
             </li>

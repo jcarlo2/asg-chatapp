@@ -567,6 +567,10 @@ ul {
   justify-content: flex-start;
   align-items: center;
   position: relative;
+  cursor: pointer;
+}
+.main-container > .main-two .main-header > .dropdown .dropdown-list li:hover {
+  background-color: rgba(0, 0, 0, 0.3);
 }
 .main-container > .main-two .main-header > .dropdown .dropdown-list li i {
   position: absolute;

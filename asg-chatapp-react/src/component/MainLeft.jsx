@@ -1,36 +1,44 @@
 import React, { useRef, useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import GlobalContext from "../context/GlobalContext";
+import useHelper from "../helper/useHelper";
 
 const MainLeft = () => {
   const navigate = useNavigate();
   const url = useContext(GlobalContext).url;
+  const socket = useContext(GlobalContext).socket;
   const modalRef = useContext(GlobalContext).modalRef;
   const setText = useContext(GlobalContext).setText;
   const profile = useContext(GlobalContext).profile;
   const setProfile = useContext(GlobalContext).setProfile;
+  const friendProfile = useContext(GlobalContext).friendProfile;
   const setFriendProfile = useContext(GlobalContext).setFriendProfile;
   const friendList = useContext(GlobalContext).friendList;
   const setFriendList = useContext(GlobalContext).setFriendList;
+  const blockedList = useContext(GlobalContext).blockedList;
+  const setBlockedList = useContext(GlobalContext).setBlockedList;
+  const requestList = useContext(GlobalContext).requestList;
+  const setRequestList = useContext(GlobalContext).setRequestList;
+  const searchList = useContext(GlobalContext).searchList;
+  const setSearchList = useContext(GlobalContext).setSearchList;
+  const setContentList = useContext(GlobalContext).setContentList;
+  const headerOptionRef = useContext(GlobalContext).headerOptionRef;
+  const searchInputRef = useContext(GlobalContext).searchInputRef;
   const sidebarUl = useRef();
   const notificationContainer = useRef();
   const contactContainer = useRef();
   const messageContainer = useRef();
   const profileContainer = useRef();
   const searchListRef = useRef();
-  const searchInputRef = useRef();
   const savedContactRef = useRef();
   const [messageFriend, setMessageFriend] = useState([]);
-  const [blockedList, setBlockedList] = useState([]);
-  const [requestList, setRequestList] = useState([]);
-  const [searchList, setSearchList] = useState([]);
-  
+  const helper = useHelper();
 
   useEffect(() => {
     findProfile();
-    findAllFriends();
-    findBlockedFriends();
-    findFriendRequest();
+    helper.findAllFriends(url, setFriendList);
+    helper.findBlockedFriends(url, setBlockedList);
+    helper.findFriendRequest(url, setRequestList);
   }, []);
 
   useEffect(() => {
@@ -45,36 +53,6 @@ const MainLeft = () => {
     }).then((res) => {
       if (res.ok) {
         res.json().then(setProfile);
-      }
-    });
-  };
-
-  const findAllFriends = () => {
-    fetch(`${url}/api/v1/user/find-all-friends`, {
-      credentials: "include",
-    }).then((res) => {
-      if (res.ok) {
-        res.json().then(setFriendList);
-      }
-    });
-  };
-
-  const findBlockedFriends = () => {
-    fetch(`${url}/api/v1/user/find-blocked-friend`, {
-      credentials: "include",
-    }).then((res) => {
-      if (res.ok) {
-        res.json().then(setBlockedList);
-      }
-    });
-  };
-
-  const findFriendRequest = () => {
-    fetch(`${url}/api/v1/user/find-friend-request`, {
-      credentials: "include",
-    }).then((res) => {
-      if (res.ok) {
-        res.json().then(setRequestList);
       }
     });
   };
@@ -127,22 +105,10 @@ const MainLeft = () => {
     }
     searchListRef.current.classList.add("show");
     savedContactRef.current.classList.remove("show");
-    fetch(`${url}/api/v1/user/search`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ search }),
-    }).then((res) => {
-      if (res.ok) {
-        res.json().then(setSearchList);
-      }
-    });
+    helper.findSearchRequest(url, setSearchList, search);
   };
 
   const handleUnblockAndUnfriend = (id) => {
-    console.log(id);
     fetch(`${url}/api/v1/user/unblock-unfriend`, {
       method: "POST",
       credentials: "include",
@@ -152,10 +118,15 @@ const MainLeft = () => {
       body: JSON.stringify({ id }),
     }).then((res) => {
       if (res.ok) {
-        res.json().then((data) => {
-          findBlockedFriends();
-          findAllFriends();
-          findFriendRequest();
+        res.json().then(() => {
+          console.log("UNFRIEND", id);
+          socket.emit("change", {
+            friendId: id,
+            action: "UNBLOCK AND UNFRIEND",
+          });
+          helper.findBlockedFriends(url, setBlockedList);
+          helper.findAllFriends(url, setFriendList);
+          helper.findFriendRequest(url, setRequestList);
           const search = searchInputRef.current.value;
           handleSearch(search);
         });
@@ -175,9 +146,11 @@ const MainLeft = () => {
       if (res.ok) {
         res.json().then((data) => {
           const search = searchInputRef.current.value;
-          setBlockedList(data);
-          findAllFriends();
           handleSearch(search);
+          setBlockedList(data);
+          helper.findAllFriends(url, setFriendList);
+          socket.emit("change", { friendId: id, action: "BLOCK" });
+          if (friendProfile.id === id) setContentList([]);
         });
       }
     });
@@ -191,7 +164,7 @@ const MainLeft = () => {
     else if (str === "Add") fullUrl = `${url}/api/v1/user/add`;
     else {
       handleUnblockAndUnfriend(id, 1);
-      findFriendRequest();
+      helper.findFriendRequest(url, setRequestList);
       handleSearch(search);
       return;
     }
@@ -205,8 +178,9 @@ const MainLeft = () => {
     }).then((res) => {
       if (res.ok) {
         res.json().then(() => {
-          findAllFriends();
-          findFriendRequest();
+          socket.emit("change", { friendId: id, action: " SEARCH OPTION" });
+          helper.findAllFriends(url, setFriendList);
+          helper.findFriendRequest(url, setRequestList);
           handleSearch(search);
         });
       }
@@ -454,7 +428,10 @@ const MainLeft = () => {
           <div
             key={`message-${friend.id}`}
             className="active"
-            onClick={() => setFriendProfile(friend)}>
+            onClick={() => {
+              setFriendProfile(friend);
+              headerOptionRef.current.classList.remove("show");
+            }}>
             <div>{friend.initial}</div>
             <div>
               <div>{friend.date}</div>
